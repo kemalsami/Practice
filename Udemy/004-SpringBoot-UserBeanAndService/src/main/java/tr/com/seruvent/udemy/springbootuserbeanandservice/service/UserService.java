@@ -20,7 +20,11 @@ public class UserService {
     }
 
     public User getUserById(int id){
-        return userList.get(id);
+        for(int i=0; i<userList.size(); i++){
+            if(userList.get(i).getId() == id)
+                return userList.get(i);
+        }
+        return null;
     }
 
     public User postUser(User user){
