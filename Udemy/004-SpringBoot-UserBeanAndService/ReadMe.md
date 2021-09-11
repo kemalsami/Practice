@@ -3,12 +3,12 @@
 
 ## İçindekiler
 1. [Gereksinimler](#gereksinimler)
-2. [@Component](#component)
-3. [@Autowired](#autowired)
-4. [JACKSON](#jackson)
-5. [JACKSON Setting](#jackson-settings)
-6. [Olası Hatalar](#olası-hatalar)
-7. [Kaynaklar](#kaynaklar)
+2. [@Component / @Autowired](#component--autowired)
+4. [@RequestBody](#requestbody)
+5. [JACKSON](#jackson)
+6. [JACKSON Setting](#jackson-settings)
+7. [Olası Hatalar](#olası-hatalar)
+8. [Kaynaklar](#kaynaklar)
 	
 
 ## Gereksinimler
@@ -16,12 +16,47 @@
  * Spring Boot DevTools
 
 
-## @Component
+## @Component | @Autowired
 UserService class'ta `@Component` annotation kullanılmıştır. `@Autowired` kullanılabilmesi için gerekli olduğundan eklenmiştir.
 
+`@Autowired` ile bir obje oluşturduğumuzda `new` ile başlayan Constructor seçmemize gerek kalmaz. Otomatik olarak uygun olan contructor ile obje yaratılır.
 
-## @Autowired
-Bu annotation ile bir obje oluşturduğumuzda `new` ile başlayan Constructor seçmemize gerek kalmaz. Otomatik olarak uygun olan contructor ile obje yaratılır.
+## @RequestBody
+
+- @SpringBootApplication
+  - Spring auto-configuration yapılandırılmasını sağlar
+- @Component / @Autowired
+- @RestController
+- @RequestMapping / @GetMapping / @PostMapping
+  - request'lerin map edilmesinde kullanılır
+- `@PathVarible / @RequestBody`
+  - request parametrelerinin fonsiyonlara aktarılmasını sağlarlar
+  
+> Gelen istekte, path üzerindeki değeri almak istiyorsak `@PathVariable` annotation kullanılır. Bazı durumlarda ise url üzerinden alınacak değerler yeterli olmaz. Gelen istekten daha fazla değer alabilmek için isteğin body değerine bakılır. Body içerisindeki değerler `@RequestBody` annotation ile fonksiyonlara aktarılır.
+
+Aşağıdaki örnekte olduğu gibi gelen isteğin body değeri otomatik olarak `User` objesine çevrilmektedir.
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import tr.com.seruvent.udemy.springbootuserbeanandservice.model.User;
+import tr.com.seruvent.udemy.springbootuserbeanandservice.service.UserService;
+
+@RestController
+public class UserController {
+
+  @Autowired
+  UserService userService;
+  
+  // Other functions  
+
+  @PostMapping(path = "users")
+  public void createUser(@RequestBody User user){
+    userService.saveUser(user);
+  }
+
+}
+```
 
 
 ## JACKSON

@@ -27,7 +27,7 @@ public class UserService {
         return null;
     }
 
-    public User postUser(User user){
+    public User saveUser(User user){
         userList.add(user);
         return user;
     }
