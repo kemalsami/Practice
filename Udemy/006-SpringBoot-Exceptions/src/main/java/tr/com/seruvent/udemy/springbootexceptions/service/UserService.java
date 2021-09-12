@@ -32,4 +32,8 @@ public class UserService {
         return null;
     }
 
+    public void saveUser(User user){
+        userList.add(user);
+    }
+
 }

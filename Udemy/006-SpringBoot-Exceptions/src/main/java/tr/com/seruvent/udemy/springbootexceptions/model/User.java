@@ -10,6 +10,8 @@ public class User {
     private String surname;
     private Date birth;
 
+    public User(){}
+
     public User(String mail) {
         this.mail = mail;
         this.birth = new Date();
