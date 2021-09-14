@@ -38,12 +38,37 @@ public class UserController {
     }
 
 
+    /**
+     * ResponseEntity Examples
+     */
+
+    // User kullanıcısı bulunmaması durumunda 404 not found dönülmektedir
+    @GetMapping(path = "/users/exception")
+    public ResponseEntity getUserException(@RequestParam int id){
+        User user = userService.findUser(id);
+        if(user==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
+    // ResponseEntity header(ok) ve body(User.class) beraber dönmektedir
+    @GetMapping(path = "/users/param")
+    public ResponseEntity getUserWithParam(@RequestParam int id){
+        User user = userService.findUser(id);
+        return ResponseEntity.ok(user);
+    }
+
+    // Kullanıcı kaydı sonrasında header'da location ile kullanıcı bilgilerinin çekilebileceği uri ile dönülmektedir
     @PostMapping(path = "users")
     public ResponseEntity saveUser(@RequestBody User user){
-        userService.saveUser(user);
 
         //URI location = URI.create(String.format("localhost:8081/users/%o" , user.getId()));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/id/{user.id}").buildAndExpand(user.getId()).toUri();
+        URI location = ServletUriComponentsBuilder
+                                .fromCurrentRequestUri()
+                                .path("/id/{user.id}")
+                                .buildAndExpand(user.getId())
+                                .toUri();
 
         return ResponseEntity.created(location).build();
     }
