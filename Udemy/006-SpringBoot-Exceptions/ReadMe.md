@@ -6,8 +6,9 @@
 2. [Response](#response)
 3. [ResponseEntity](#responseentity)
 4. [@ResponseStatus](#responsestatus)
-5. [Annotations](#annotations)
-6. [Kaynaklar](#kaynaklar)
+5. [Trace Error Message](#error-message-trace)
+6. [Annotations](#annotations)
+7. [Kaynaklar](#kaynaklar)
 	
 
 ## Gereksinimler
@@ -147,5 +148,6 @@ Spring framework'te kullanılan annotation'ları genel olarak aşağıdaki gibi 
 
 ## Kaynaklar
 - https://spring.io/projects/spring-boot
-- 
+- https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc 
+- https://www.baeldung.com/exception-handling-for-rest-with-spring
 
