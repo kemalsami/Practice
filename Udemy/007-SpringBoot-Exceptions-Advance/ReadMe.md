@@ -14,7 +14,7 @@
 
 ## Advanced Exception Handling
 
-@ResponseStatus kullanarak oluşturduğumuz UserNotFOundException class'ının response olarak dönmesi durumunda resimdeki değerler gelir. Spring default olarak `timestamp`, `status` ve `path` gibi değerleri atamıştır.  
+@ResponseStatus kullanarak oluşturduğumuz UserNotFoundException class'ının response olarak dönmesi durumunda resimdeki değerler gelir. Spring default olarak `timestamp`, `status` ve `path` gibi değerleri atamıştır.  
 
 ![UserNotFoundException](./images/UserNotFoundException.png)
 
