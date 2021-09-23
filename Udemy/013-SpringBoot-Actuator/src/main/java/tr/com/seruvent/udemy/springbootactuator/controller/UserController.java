@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tr.com.seruvent.udemy.springbootactuator.exception.UserNotFoundException;
 import tr.com.seruvent.udemy.springbootactuator.model.User;
 import tr.com.seruvent.udemy.springbootactuator.service.UserService;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -36,6 +37,15 @@ public class UserController {
         entityModel.add(webMvcLinkBuilder.withSelfRel());
 
         return entityModel;
+    }
+
+    @PostMapping(path = "users")
+    public ResponseEntity saveUser(@Valid @RequestBody User user){
+        userService.saveUser(user);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(user.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }
