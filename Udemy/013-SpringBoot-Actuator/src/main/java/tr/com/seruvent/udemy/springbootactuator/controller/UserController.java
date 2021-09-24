@@ -39,13 +39,19 @@ public class UserController {
         return entityModel;
     }
 
+
     @PostMapping(path = "users")
     public ResponseEntity saveUser(@Valid @RequestBody User user){
         userService.saveUser(user);
-
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}").buildAndExpand(user.getId()).toUri();
-
         return ResponseEntity.created(location).build();
+    }
+
+
+    @DeleteMapping(path = "users")
+    public ResponseEntity deleteUser(@PathVariable int id){
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
     }
 
 }

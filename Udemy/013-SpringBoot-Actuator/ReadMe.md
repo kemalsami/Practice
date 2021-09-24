@@ -40,6 +40,7 @@ Direk dependency olarak eklemek istiyorsak maven projesi için `pom.xml` dosyas�
 ## Actuator UI
 Spring uygulamasına bağımlılık eklendikten sonra `/actuator` (localhost:8080/actuator) ile uygulama monitor edilebilir.
 
+- [http://localhost:8080/actuator](http://localhost:8080/actuator)
 
 ## Kaynaklar
 - https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
