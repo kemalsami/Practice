@@ -7,7 +7,8 @@
 3. [Actuator Dependencies](#actuator-dependencies)
 4. [Actuator HTTP Endpoints](#actuator-http-endpoints)
 5. [Actuator Settings](#actuator-settings)
-6. [Kaynaklar](#kaynaklar)
+6. [HAL Explorer](#hal-explorer)
+7. [Kaynaklar](#kaynaklar)
 	
 
 ## Gereksinimler
@@ -16,6 +17,7 @@
  * Validation
  * HATEOAS
  * Actuator
+ * HAL Explorer
 
 
 ## Actuator
@@ -66,7 +68,32 @@ management.endpoints.web.exposure.include=*
 ![Actuator Settings All Enabled](./images/actuator-browser-02.png)
 
 
+## HAL Explorer
+`HAL Explorer` aslında HATEOS gibi belirli formatta olan REST sorguları için geliştiricilere kolaylık sağlar. 
+
+>Bazı REST standartları aşağıdaki gibidir. 
+>- HATEOAS 
+>- HAL (Hypertext Application Language)
+>- JSON-LD
+>- SIREN
+>- ...
+
+
+Dependency olarak eklemek için maven projesi için `pom.xml` dosyasına aşağıdaki gibi `hal explorer` bağımlılığı eklenir.
+```xml
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-rest-hal-explorer</artifactId>
+</dependency>
+```
+
+HAL Explorer arayüzüne [localhost:8080](localhost:8080) üzerinden erişilebilir. 
+
+`Actuator` her ne kadar uygulama hakkında bilgi verse de bu verilerin görsel olarak daha rahat şekilde gösterilebilmesi için `HAL Explorer` kullanılmaktadır. Actuator, HATEOAS formatında olduğundan `HAL Explorer` ile kullanılabilir.
+
+Actuator arayüzüne [localhost:8080/actuator](localhost:8080/actuator) üzerinden erişilebilir.
+
 ## Kaynaklar
 - https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
 - https://spring.io/projects/spring-boot
-- 
+- https://sookocheff.com/post/api/on-choosing-a-hypermedia-format/
