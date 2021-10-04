@@ -161,6 +161,67 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 ```
 
 
+## Mapping Entities
+`User` ile `Post` tablolarını birbiri ile ilişkilendirmek için `@ManyToOne` gibi annotation'lar kullanılır. Zaten kullanılmaması durumunda hata verecektir.
+
+***UYARI:*** `getUser()` ve `setUser()` metodlarını oluşturmazsak, Jackson User objesinin dönmesi gerektiğini bilmeyeceğinden User objesi dönmeyecektir.
+
+```java
+@Entity
+public class Post {
+  // ...
+  @ManyToOne
+  private User user;
+  // ...
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+  // ...
+}
+```
+
+Bu aşamada Post'ları listeleyen servis çağırdığımızda aşağıdaki gibi bir sonuç gelecektir.
+
+```json
+{
+        "id": 20001,
+        "description": "my sample post 1",
+        "createdAt": "2021-10-03",
+        "user": {
+            "id": 10001,
+            "mail": "kskaraca@gmail.com",
+            "createdAt": "2021-10-03"
+        }
+    }
+```
+
+Aynı şekilde User listelendiğinde User'ların Post değerlerinin de gelmesi beklenir. Akla ilk gelen durum aşağıdaki gibi `@OneToMany` ile eklemek olacaktır.
+
+```java
+@Entity
+public class User {
+
+    // ...
+    @OneToMany
+    private List<Post> userPosts;
+    // ...
+
+    public List<Post> getUserPosts() {
+        return userPosts;
+    }
+
+    public void setUserPosts(List<Post> userPosts) {
+        this.userPosts = userPosts;
+    }
+}
+```
+Yukarıdaki gibi bir yaklaşım uygulandığında `userPosts` değeri boş gelecektir. 
+
 ## Kaynaklar
 
 - https://spring.io/projects/spring-boot
