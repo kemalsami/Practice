@@ -8,7 +8,8 @@
 4. [data.sql](#datasql)
 5. [JPA Dependency](#jpa-dependency)
 6. [JPA](#jpa)
-7. [Kaynaklar](#kaynaklar)
+7. [JPARepository](#jparepository)
+8. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 
@@ -74,10 +75,27 @@ spring.datasource.driverClassName=org.h2.Driver
 ```
 
 ## data.sql
-Uygulama başlatılırken çalıştırılmasını istediğimiz 
+Uygulamanın her restart edilmesi durumunda veritabanındaki tablolar `drop` edilip tekrardan oluşturulur. Bu sebepten tablolar içerisinde herhangi bir data bulunmamaktadır.
 
-> Burada Spring Boot 2.4.4 ile 2.5.5 arasındaki fark anlatılmalı...
+`data.sql` ile veritabanındaki tablolara veri eklenmesi sağlanır. (resources/data.sql) 
 
+> Spring Boot 2.5 ve üzerindeki versionlarda data.sql çalışmasında sorun olmaktadır. Bu sorunun giderilmesi için `application.properties` dosyasına `spring.jpa.defer-datasource-initialization=true` eklenmelidir.
+> 
+> Spring Boot 2.4.4'te herhangi bir sorun ile karşılaşılmadan data.sql çalışmaktadır.
+
+Sonuç olarak `application.properties` dosyası bu aşamada aşağıdaki gibi olmalıdır.
+
+```properties
+# DATABASE JPA Configuration
+spring.jpa.defer-datasource-initialization=true
+# DATABASE H2 Configuration
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.datasource.driverClassName=org.h2.Driver
+```
 
 ## JPA Dependency
 `JPA (Java Persistence API)`, Java sınıfları ile ilişkisel veritabanı tablolarını ilişkilendirmek için ortaya çıkmış bir standarttır.
@@ -125,6 +143,22 @@ public class User {
   - `java.lang.annotation.ElementType.FIELD` olduğundan değişkenler için kullanılır
 
 
+## JPARepository
+Daha önceki örneklerde repository olarak statik veriler kullanılmıştı. `JPARepository` extends edilerek datanın, veritabanından çekilmesi sağlanır.
+
+Ayrıca JPARepository bazı fonksiyonları default olarak sağlamaktadır. 
+- findAll()
+- findById(int id)
+- ...
+
+Aşağıda extends edilen JPARepository örneği bulunmaktadır. Burada `interface` kullanıldığına dikkat edilmesi gerekir. 
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+    // custom methods for UserRepository
+}
+```
 
 
 ## Kaynaklar
