@@ -8,9 +8,10 @@
 4. [Config Client](#config-client)
 5. [Config Server Dependency](#config-server-dependency)
 6. [Config Server](#config-server)
-   1. [File Store](#config-server)
-   2. [Git](#config-server)
-7. [Kaynaklar](#kaynaklar)
+   1. [File Store](#file-store)
+   2. [Git](#git)
+7. [Config Server Property Sources](#config-server-property-sources)
+8. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 
@@ -174,10 +175,17 @@ _application.properties_
 spring.cloud.config.server.git.uri=file:///Users/kemalsamikaraca/Desktop/Practice/Udemy/002-Microservices/001-Microservices-SpringCloud/spring-cloud-dummy-config-server/src/main/resources/configs/git
 ```
 
+## Config Server Property Sources
+Config Server mikro servisinin Config Client servisler için ayarları yapıldıktan sonra aşağıdaki link üzerinden servis bilgisine erişilebilir.
+
+Örnek uygulamada Config Client için sadece `dummy-application-1` servisi bulunmaktadır. `spring.application.name` ile tanımlanan ve Config Server mikro servisini kullanan Config Client mikro servisleri aşağıdaki formatta çağrılabilirler. 
+- http://localhost:8888/dummy-application-1/default 
+
 ## Kaynaklar
 
 - https://microservices.io/
 - https://spring.io/projects/spring-cloud
 - https://cloud.spring.io/spring-cloud-config/reference/html/
 - https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_client.html
+- https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_server.html
 - https://www.baeldung.com/spring-cloud-configuration
