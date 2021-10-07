@@ -1,6 +1,6 @@
 HELP.md
 target/
-!spring-cloud-dummy-service/.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -14,7 +14,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-spring-cloud-dummy-service/.idea
+.idea
 *.iws
 *.iml
 *.ipr
