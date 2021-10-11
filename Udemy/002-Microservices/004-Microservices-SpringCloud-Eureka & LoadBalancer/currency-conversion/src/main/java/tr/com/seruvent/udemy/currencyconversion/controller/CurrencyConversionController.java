@@ -1,16 +1,23 @@
 package tr.com.seruvent.udemy.currencyconversion.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import tr.com.seruvent.udemy.currencyconversion.configuration.Configuration;
 import tr.com.seruvent.udemy.currencyconversion.model.CurrencyConversion;
+import tr.com.seruvent.udemy.currencyconversion.proxy.CurrencyExchangeProxy;
 
 @RestController
 public class CurrencyConversionController {
 
-    // http://localhost:8001/currency-conversion/from/USD/to/TR/quantity/10
+    @Autowired
+    private Configuration configuration;
+
+    @Autowired
+    private CurrencyExchangeProxy currencyExchangeProxy;
 
     @GetMapping(path = "currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion currencyConversion(@PathVariable String from,
@@ -24,5 +31,16 @@ public class CurrencyConversionController {
         currencyConversion.setQuantity(quantity);
         return currencyConversion;
 
+    }
+
+    @GetMapping(path = "currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
+    public CurrencyConversion currencyConversionFeign(@PathVariable String from,
+                                                      @PathVariable String to,
+                                                      @PathVariable int quantity){
+
+        CurrencyConversion currencyConversion = currencyExchangeProxy.getCurrencyExchange(from,to);
+
+        currencyConversion.setQuantity(configuration.getQuantity());
+        return currencyConversion;
     }
 }

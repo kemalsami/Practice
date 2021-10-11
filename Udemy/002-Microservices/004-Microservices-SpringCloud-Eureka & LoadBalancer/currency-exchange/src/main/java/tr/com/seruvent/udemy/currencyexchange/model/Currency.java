@@ -19,6 +19,9 @@ public class Currency {
     @Transient
     private String environment;
 
+    @Transient
+    private String port;
+
     public int getId() {
         return id;
     }
@@ -57,5 +60,13 @@ public class Currency {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 }

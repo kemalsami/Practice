@@ -5,7 +5,8 @@
 2. [Rest Template](#rest-template)
 3. [OpenFeign](#openfeign)
 4. [How to include OpenFeign](#how-to-include-openfeign)
-5. [Kaynaklar](#kaynaklar)
+5. [FeignClient in Controller](#feignclient-in-controller)
+6. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 * Java 1.8
@@ -81,11 +82,36 @@ public interface CurrencyExchangeProxy {
 
 }
 ```
-- `@FeignClient(name="..."` değeri ile mikro servisin ismi belirtilmektedir
+- `@FeignClient(name="..."` değerinin çağrılan mikro servis ismi ile **_BAĞLANTISI YOKTUR_**. Bu değer, oluşturduğumuz CurrencyExchangeProxy (Feign Client) ismidir ve herhangi isim olabilir.
 - `@FeignClient(url="..."` değeri ile mikro servisin  hangi url üzerinden çağrılacağı belirtilir
 
+
+## FeignClient in Controller
+`FeignClient`, proxy olarak oluşturulduktan sonra Controller içerisinde @Autowired ile oluşturularak kullanılabilir.
+
+```java
+@RestController
+public class CurrencyConversionController {
+
+    @Autowired
+    private CurrencyExchangeProxy currencyExchangeProxy;
+
+    // ...
+    
+    @GetMapping(path = "currency-conversion-feign/from/{fromCurrency}/to/{toCurrency}/quantity/{quantity}")
+    public CurrencyConversion currencyConversionFeign(@PathVariable String fromCurrency,
+                                                      @PathVariable String toCurrency,
+                                                      @PathVariable int quantity){
+
+        CurrencyConversion currencyConversion = currencyExchangeProxy.proxyCurrencyExchange(fromCurrency,toCurrency);
+        return currencyConversion;
+    }
+    
+}
+```
 
 
 ## Kaynaklar
 - https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/
 - https://github.com/spring-cloud-samples/feign-eureka
+- https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-feign.html

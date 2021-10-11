@@ -8,7 +8,7 @@ public class CurrencyConversion {
     private int quantity;
     private double value;
     private String environment;
-
+    private String port;
 
     public int getId() {
         return id;
@@ -48,6 +48,14 @@ public class CurrencyConversion {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     public double getValue() {
