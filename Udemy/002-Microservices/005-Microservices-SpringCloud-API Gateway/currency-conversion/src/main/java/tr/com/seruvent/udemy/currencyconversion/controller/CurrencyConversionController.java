@@ -1,6 +1,7 @@
 package tr.com.seruvent.udemy.currencyconversion.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,9 @@ public class CurrencyConversionController {
 
     @Autowired
     private Configuration configuration;
+
+    @Autowired
+    private Environment environment;
 
     @Autowired
     private CurrencyExchangeProxy currencyExchangeProxy;
@@ -41,6 +45,7 @@ public class CurrencyConversionController {
         CurrencyConversion currencyConversion = currencyExchangeProxy.getCurrencyExchange(from,to);
 
         currencyConversion.setQuantity(configuration.getQuantity());
+        currencyConversion.setPort(environment.getProperty("server.port"));
         return currencyConversion;
     }
 }
