@@ -33,6 +33,7 @@ public class CurrencyConversionController {
         ResponseEntity<CurrencyConversion> responseEntity = restTemplate.getForEntity(url, CurrencyConversion.class);
         CurrencyConversion currencyConversion = responseEntity.getBody();
         currencyConversion.setQuantity(quantity);
+        currencyConversion.setPort(environment.getProperty("server.port"));
         return currencyConversion;
 
     }
