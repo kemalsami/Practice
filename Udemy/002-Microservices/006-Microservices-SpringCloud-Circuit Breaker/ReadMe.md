@@ -8,8 +8,7 @@
 5. [API-Gateway Routes](#api-gateway-routes)
    1. [application.properties](#appilicationproperties)
    2. [RouteLocatorBuilder & RouteLocator](#routelocatorbuilder--routelocator)
-6. [Logging & Filter](#logging--filter)
-7. [Kaynaklar](#kaynaklar)
+6. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 * Java 1.8
@@ -63,6 +62,8 @@ _Örnek_ olarak aşağıdaki servislerden `CURRENCY-EXCHANGE-SERVICE` direk ça�
 
 
 ## API-Gateway Routes
+
+
 **_Soru:_**  
 Neden API-Gateway routes'a ihtiyaç duyulur?
 
@@ -115,26 +116,6 @@ Sonuç olarak, `.route(p -> p.path("/currency-exchange/**").uri("lb://currency-e
 Örn. API-Gateway servisi şuan localhost:8765 üzerinde çalışmaktadır. 
 - http://localhost:8765/currency-exchange/abc isteği http://localhost:8101/currency-exchange/abc adresine,
 - http://localhost:8765/currency-exchange/from/USD/to/TR isteği http://localhost:8101/currency-exchange/from/USD/to/TR adresine yönlendirilecektir.
-
-
-## Logging & Filter
-API-Gateway üzerinden tüm servislerin istekleri geçmektedir. Bu sebeple log'ların yönetimi API-Gateway için oldukça önemlidir.
-
-Gelen tüm istekleri görüntüleyebileceğimiz bir filter yazmamız gerekir. Aşağıdaki gibi bir filter oluşturularak API-Gateway'e yapılan tüm requestlerin log'ları görüntülenebilir.
-
-```java
-@Component
-public class LoggingFilter implements GlobalFilter {
-    
-    private Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
-    
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        logger.info("Path of the request received -> {}" , exchange.getRequest().getPath());
-        return chain.filter(exchange);
-    }
-}
-```
 
 
 ## Kaynaklar
