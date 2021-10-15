@@ -15,6 +15,7 @@ public class ApiGatewayConfiguration {
                 .routes()
                     .route(p -> p.path("/currency-exchange/**").uri("lb://currency-exchange-service"))
                     .route(p -> p.path("/currency-conversion/**").uri("lb://currency-conversion-service"))
+                    .route(p -> p.path("/circuit-breaker/**").uri("lb://resilience-circuit-breaker-service"))
                 .build();
 
     }
