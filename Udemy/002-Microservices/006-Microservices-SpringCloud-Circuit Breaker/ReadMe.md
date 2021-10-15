@@ -107,7 +107,10 @@ Kod içerisinde kullanılan `@Retry(name = "CircuitBreakerRetryName")` satırı 
 ```properties
 resilience4j.retry.instances.CircuitBreakerRetryName.max-attempts=5
 resilience4j.retry.instances.CircuitBreakerRetryName.wait-duration=1s
+resilience4j.retry.instances.CircuitBreakerRetryName.enable-exponential-backoff=true
 ```
+
+`resilience4j.retry.instances.CircuitBreakerRetryName.enable-exponential-backoff` değeri ile her denemeden sonra 2 kat daha fazla beklemektedir. AWS üzerinde kullanılan servisler bunu aktif olarak kullanmaktadır.
 
 Circuit Breaker özelliklerinden bir diğeri de sonuç dönemeyecek durumda ise default bir sonucun dönmesidir. 
 Yukarıdaki örnekte Circuit Breaker kullanılan servis 5 kez 1 saniye aralıklarla işlemini yapmaya çalışmaktadır. 
