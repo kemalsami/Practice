@@ -7,18 +7,11 @@
 4. [Circuit Breaker Desteklenen Uygulamalar](#circuit-breaker-desteklenen-uygulamalar)
 5. [Resilience4j](#resilience4j)
 6. [Resilience4j Annotations](#resilience4j-annotations)
-   1. [@Retry](#)
-   2. [@CircuitBreaker](#)
-   3. [@RateLimiter](#)
-   4. [@Bulkhead](#)
 7. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 * Java 1.8
 * Spring Boot 2.5.5
-* Actuator
-* Resilience4j
-* AOP
 
 
 ## Uygulama Mimarisi
@@ -83,9 +76,6 @@ server.port=8201
 ## Resilience4j Annotations
 Circuit Breaker için kullanılan annotation'lardan bazıları aşağıdakilerdir.
 - @Retry
-- @CircuitBreaker
-- @RateLimiter
-- @Bulkhead
 
 ```java
 @RestController
@@ -110,54 +100,7 @@ public class CircuitBreakerController {
 }
 ```
 
-Kod içerisinde kullanılan `@Retry(name = "CircuitBreakerRetryName")` satırı ile @Retry annotation için isimlendirme yapılmaktadır. `CircuitBreakerRetryName` değerini kullanarak bu fonksiyon için daha farklı ayarlar yapılabilir.
-```properties
-resilience4j.retry.instances.CircuitBreakerRetryName.max-attempts=5
-resilience4j.retry.instances.CircuitBreakerRetryName.wait-duration=1s
-resilience4j.retry.instances.CircuitBreakerRetryName.enable-exponential-backoff=true
-```
-
-`resilience4j.retry.instances.CircuitBreakerRetryName.enable-exponential-backoff` değeri ile her denemeden sonra 2 kat daha fazla beklemektedir. AWS üzerinde kullanılan servisler bunu aktif olarak kullanmaktadır.
-
-Circuit Breaker özelliklerinden bir diğeri de sonuç dönemeyecek durumda ise default bir sonucun dönmesidir. 
-Yukarıdaki örnekte Circuit Breaker kullanılan servis 5 kez 1 saniye aralıklarla işlemini yapmaya çalışmaktadır. 
-Ancak tüm bu isteklerin sonucunda işlemin halen gerçekleştirilememesinde ne dönüleceği belirtilmemiştir.
-
-```java
-@RestController
-@RequestMapping(path = "circuit-breaker")
-public class CircuitBreakerController {
-
-    @Autowired
-    private CurrencyConversionProxy currencyConversionProxy;
-
-    private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
-
-    @GetMapping(path = "/test")
-    @Retry(name = "CircuitBreakerRetryName", fallbackMethod = "defaultReturn")
-    public CurrencyConversion getRetryExampleRequest(){
-
-        logger.info("TEST Called");
-
-        // Request call with Feign but there is no such url and it will 404 not found
-        CurrencyConversion currencyConversion = currencyConversionProxy.getCurrencyConversionDummy();
-        return currencyConversion;
-    }
-    
-    public CurrencyConversion defaultReturn(Exception ex){
-        CurrencyConversion currencyConversion = new CurrencyConversion();
-        return currencyConversion;
-    }
-}
-```
-
-`@Retry` parametrelerinden `fallbackMethod` değeri ile işlemlerin hatalı olması durumunda hangi fonksiyonun çalıştırılacağı belirtilmektedir.
-
-**_DİKKAT!!!_**   
-`defaultReturn()` methodunun parametre olarak `Exception` aldığına dikkat edilmelidir.
-
 
 ## Kaynaklar
 - https://spring.io/projects/spring-cloud
 - https://spring.io/projects/spring-cloud-circuitbreaker
-- https://resilience4j.readme.io/docs/retry
