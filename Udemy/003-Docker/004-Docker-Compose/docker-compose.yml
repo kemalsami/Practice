@@ -1,0 +1,58 @@
+
+services:
+  currency-exchange:
+    image: kemalsami/currency-exchange:0.0.1-SNAPSHOT
+    ports:
+      - 8101:8101
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+
+  currency-conversion:
+    image: kemalsami/currency-conversion:0.0.1-SNAPSHOT
+    ports:
+      - 8001:8001
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+
+  api-gateway:
+    image: kemalsami/api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - 8765:8765
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+
+  eureka-server:
+    image: kemalsami/eureka-server:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    depends_on:
+      - zipkin-server
+    networks:
+      - app-network
+    environment:
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411
+    networks:
+      - app-network
+
+networks:
+  app-network:
