@@ -74,12 +74,32 @@ Bir servisin eureka server'a register olabilmesi için `Eureka Discovery Client`
 
 ![Eureka Client](./images/eureka-discovery-client.png)
 
-Alternatif olarak maven projesi için `pom.xml` dosyasına aşağıdaki gibi `Eureka Client` bağımlılığı eklenir.
+Alternatif olarak maven projesi için `pom.xml` dosyasına aşağıdaki gibi `Eureka Client` bağımlılığı eklenir. `dependencyManagement` eklenmesi unutulmamalıdır.
 ```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-</dependency>
+<properties>
+    <!-- other properties -->
+    <spring-cloud.version>2020.0.4</spring-cloud.version>
+</properties>
+
+<dependencies>
+    <!-- other dependencies -->
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+</dependencies>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
 ```
 
 Eureka server'a eklenecek olan servis `application.properties` dosyasına aşağıdaki değer eklenir. Bu işlem ile servis, eureka server'a register olur.

@@ -1,0 +1,25 @@
+
+services:
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin-server
+    ports:
+      - 9411:9411
+    networks:
+      - app-network
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.7.6-management
+    container_name: rabbit-mq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - app-network
+
+networks:
+  app-network:

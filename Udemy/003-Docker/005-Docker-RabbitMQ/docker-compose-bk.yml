@@ -1,0 +1,83 @@
+
+services:
+  currency-exchange:
+    image: kemalsami/currency-exchange:0.0.2-SNAPSHOT
+    ports:
+      - 8101:8101
+    depends_on:
+      - rabbitmq
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+      SPRING_RABBITMQ_HOST: rabbitmq
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+
+  currency-conversion:
+    image: kemalsami/currency-conversion:0.0.2-SNAPSHOT
+    ports:
+      - 8001:8001
+    depends_on:
+      - rabbitmq
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+      SPRING_RABBITMQ_HOST: rabbitmq
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+
+  api-gateway:
+    image: kemalsami/api-gateway:0.0.2-SNAPSHOT
+    ports:
+      - 8765:8765
+    depends_on:
+      - rabbitmq
+      - zipkin-server
+      - eureka-server
+    networks:
+      - app-network
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://eureka-server:8761/eureka
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+      SPRING_RABBITMQ_HOST: rabbitmq
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+
+  eureka-server:
+    image: kemalsami/eureka-server:0.0.2-SNAPSHOT
+    ports:
+      - 8761:8761
+    depends_on:
+      - rabbitmq
+      - zipkin-server
+    networks:
+      - app-network
+    environment:
+      SPRING.ZIPKIN.BASE-URL: http://zipkin-server:9411
+      SPRING_RABBITMQ_HOST: rabbitmq
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411
+    networks:
+      - app-network
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - app-network
+
+networks:
+  app-network:

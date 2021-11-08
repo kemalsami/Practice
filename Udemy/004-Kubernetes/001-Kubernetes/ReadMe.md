@@ -5,7 +5,8 @@
 2. [Container Orchestration](#container-orchestration)
    1. [Container Orchestration tipik özellikleri](#container-orchestration-tipik-zellikleri)
    2. [Container Orchestration opsiyonları](#container-orchestration-opsiyonlar)
-3. [Kaynaklar](#kaynaklar)
+3. [Kubernetes - K8S](#kubernetes---k8s)
+4. [Kaynaklar](#kaynaklar)
 
 ## Gereksinimler
 * Java 1.8
@@ -31,6 +32,11 @@ Docker ile mikro servislerin oluşturulması ve uygun ortamlarda çalıştırıl
   - Azure - Azure Kubernetes Service (AKS)
   - GCP - Google Kubernetes Engine (GKE) ** free ** 
 
+## Kubernetes - K8S
+Kubernetes bazen K8S olarak (K-8letters-S) tanımlanabilir. 
+
+
 ## Kaynaklar
 - https://www.udemy.com/course/microservices-with-spring-boot-and-spring-cloud/learn/lecture/24346614
+- cloud.google.com
 
