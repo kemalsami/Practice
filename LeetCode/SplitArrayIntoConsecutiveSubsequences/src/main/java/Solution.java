@@ -14,48 +14,48 @@ public class Solution {
         if(nums.length<3)
             return false;
 
+        /*
         HashMap<Integer, Integer> hashMap = new HashMap<>();
         for(int i=0; i<nums.length; i++){
             hashMap.put(nums[i] , hashMap.getOrDefault(nums[i] , 0)+1);
         }
+         */
 
+        List<ArrayList<Integer>> sequenceList = new LinkedList<>();
+        ArrayList list = new ArrayList();
+        list.add(nums[0]);
+        sequenceList.add(list);
+        for(int i=1; i<nums.length; i++){
+            boolean flag=false;
+            x:
+            for(int j=sequenceList.size()-1 ; j>=0; j--){
 
-        int prev = nums[0];
-        int freq1,freq2,freq3;
-        int[] freq = new int[3];
-        //int freq1 = hashMap.getOrDefault(nums[i%3] , 0);
-        //int freq2 = hashMap.getOrDefault(nums[0] , 0) - freq1;
-        //int freq3 = hashMap.getOrDefault(nums[0] , 0) - freq2;
-
-
-        for(int i=0; i<nums.length; i++){
-
-
-            //i elemanı için i%3 değerine bakılır
-
-            if(prev==nums[i]){
-                continue;
-            }
-
-            int x = nums[i]%3;
-            if(freq[x]==0){
-                freq[x] = hashMap.getOrDefault(nums[i] , 0);
-            }else {
-                // karşılaştırma yapılmalıdır (min değeri için)
-
-                if(!(hashMap.getOrDefault(nums[i] , 0)>=freq[x] - freq[x-1])){
-                    return false;
+                if(sequenceList.get(j).get(sequenceList.get(j).size()-1)<nums[i]-1){
+                    ArrayList temp = new ArrayList();
+                    temp.add(nums[i]);
+                    sequenceList.add(temp);
+                    flag=true;
+                    break x;
                 }
 
-                freq[(i%3)-1] = hashMap.getOrDefault(nums[i] , 0)-freq[i%3];
-                freq[(i%3)-2] = hashMap.getOrDefault(nums[i] , 0)-freq[i%3];
-                freq[i%3] = hashMap.getOrDefault(nums[i] , 0);
-
+                if(sequenceList.get(j).get(sequenceList.get(j).size()-1)==nums[i]-1) {
+                    sequenceList.get(j).add(nums[i]);
+                    flag=true;
+                    break x;
+                }
             }
 
+            if(!flag){
+                ArrayList temp = new ArrayList();
+                temp.add(nums[i]);
+                sequenceList.add(temp);
+            }
 
+        }
 
-            prev = nums[i];
+        for(int n=0; n<sequenceList.size(); n++){
+            if(sequenceList.get(n).size()<3)
+                return false;
         }
 
         return true;

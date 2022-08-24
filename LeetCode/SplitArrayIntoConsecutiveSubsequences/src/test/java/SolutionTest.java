@@ -42,9 +42,8 @@ public class SolutionTest {
      *
      *  1   3      3      2
      *
-     *  1,2,3
-     *    2,3
-     *    2,3
+     *  1,2,3,4,5
+     *          5,6,7
      *
      */
     @Test
@@ -58,9 +57,15 @@ public class SolutionTest {
      *         5,6,7
      */
     @Test
-    public void leetCode6(){
+    public void leetCode5(){
         int[] nums = {1,2,3,4,5,5,6,6,7};
         Assert.assertTrue(solution.isPossible(nums));
+    }
+
+    @Test
+    public void leetCode6(){
+        int[] nums = {1,2,3,5,5,6,7};
+        Assert.assertFalse(solution.isPossible(nums));
     }
 
     /**
