@@ -14,12 +14,39 @@ public class Solution {
         if(nums.length<3)
             return false;
 
-        /*
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
-        for(int i=0; i<nums.length; i++){
-            hashMap.put(nums[i] , hashMap.getOrDefault(nums[i] , 0)+1);
+        HashMap<Integer, Integer> hashmap = new HashMap<Integer,Integer>();
+        for(int i=0; i<nums.length ;i++){
+            hashmap.put(nums[i] , hashmap.getOrDefault(nums[i] , 0)+1);
         }
-         */
+
+
+        List<int[]> list = new ArrayList<>();
+        int[] a = new int[3];
+        a[0] = nums[0];
+        a[1] = 1;//hashmap.getOrDefault(nums[0], 0);
+        a[2] = 1;
+        list.add(a);
+        for(int j=1; j<nums.length; j++){
+
+
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * 582 ms, faster than 5.23% of Java online submissions for Split Array into Consecutive Subsequences.
+     *
+     *
+     *
+     * @param nums
+     * @return
+     */
+    public boolean isPossible_accepted_v1(int[] nums) {
+
+        if(nums.length<3)
+            return false;
 
         List<ArrayList<Integer>> sequenceList = new LinkedList<>();
         ArrayList list = new ArrayList();

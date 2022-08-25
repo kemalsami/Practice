@@ -134,4 +134,10 @@ public class SolutionTest {
         Assert.assertFalse(solution.isPossible(nums));
     }
 
+    @Test
+    public void notConsecutiveList(){
+        int[] nums = {2,4,6,7,8};
+        Assert.assertFalse(solution.isPossible(nums));
+    }
+
 }
