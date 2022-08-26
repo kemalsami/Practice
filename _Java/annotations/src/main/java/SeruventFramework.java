@@ -1,4 +1,5 @@
 
+import annotations.Info;
 import annotations.RunMethodImmediately;
 import annotations.SeruventEncapsulation;
 import entity.Person;
@@ -30,8 +31,14 @@ public class SeruventFramework {
             }
         }
 
+
         for(Method method : Person.class.getDeclaredMethods()){
             if(method.isAnnotationPresent(RunMethodImmediately.class)){
+
+                if(method.isAnnotationPresent(Info.class)){
+                    System.out.println(Person.class.getClass().getName() + " - " + method.getName() );
+                }
+
                 int times = method.getDeclaredAnnotation(RunMethodImmediately.class).times();
                 for(int i=0; i<times; i++)
                     method.invoke(person);

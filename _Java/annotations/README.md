@@ -3,7 +3,8 @@
 # Annotations
 
 1. [Create Custom Annotations](#create-custom-annotations)
-2. 
+2. [Well-known Annotations](#well-known-annotations)
+3. [References](#references)
 
 
 
@@ -26,7 +27,20 @@ public @interface Seruvent {
 }
 ```
 
+## Well-known Annotations 
 
+- @Autowired
+- @Qualifier
+- @Configuration
+- @Required
+- @SpringBootApplication
+  - @SpringBootApplication is a combination of @Configuration, @EnableAutoConfiguration and @ComponentScan
+  - @SpringBootApplication scans all the components or services and other configuration files included in the base and child packages
+
+## References 
+
+- https://www.youtube.com/watch?v=DkZr7_c9ry8
+- https://www.geeksforgeeks.org/spring-autowired-annotation/
 
 
 

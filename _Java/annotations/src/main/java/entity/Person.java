@@ -1,5 +1,6 @@
 package entity;
 
+import annotations.Info;
 import annotations.RunMethodImmediately;
 import annotations.Seruvent;
 
@@ -15,11 +16,13 @@ public class Person {
     }
 
     @RunMethodImmediately(times = 2)
+    @Info
     public void printRecord(){
         System.out.println("Person id: " + this.id + " - name: " + this.name);
     }
 
     @RunMethodImmediately
+    @Info
     public void increaseId(){
         this.id++;
     }
