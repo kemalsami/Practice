@@ -200,4 +200,47 @@ public class SolutionTest {
         Assert.assertEquals(3,solution.maxSumSubmatrix(matrix,k));
     }
 
+
+    @Test
+    public void singleNegativeNumber(){
+        int[][] matrix = {{3,4,-2,6,1}};
+        int k = -2;
+        Assert.assertEquals(-2,solution.maxSumSubmatrix(matrix,k));
+    }
+
+    @Test
+    public void singleNegativeNumber_2(){
+        int[][] matrix = {{3,4,-2,6,1}};
+        int k = 1;
+        Assert.assertEquals(1,solution.maxSumSubmatrix(matrix,k));
+    }
+
+    @Test
+    public void singleRowWithOnlyPositiveNumbers(){
+        int[][] matrix = {{3,1}};
+        int k = 1;
+        Assert.assertEquals(1,solution.maxSumSubmatrix(matrix,k));
+    }
+
+    @Test
+    public void singleRowWithOnlyPositiveNumbers_2(){
+        int[][] matrix = {{4,1,2,5}};
+        int k = 3;
+        Assert.assertEquals(3,solution.maxSumSubmatrix(matrix,k));
+    }
+
+
+    @Test
+    public void singleRowWithOnlyPositiveNumbers_3(){
+        int[][] matrix = {{2,2,1,1,1,1,4}};
+        int k = 6;
+        Assert.assertEquals(6,solution.maxSumSubmatrix(matrix,k));
+    }
+
+    @Test
+    public void singleRowWithExtendingSize_3(){
+        int[][] matrix = {{-1,2,2,1,-1,1,-2,2,1,4}};
+        int k = 6;
+        Assert.assertEquals(6,solution.maxSumSubmatrix(matrix,k));
+    }
 }
